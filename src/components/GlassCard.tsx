@@ -43,7 +43,7 @@ export function GlassCard({ children, className, glow = "cyan", float = true, de
             "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,245,255,1) 2px, rgba(0,245,255,1) 4px)",
         }}
       />
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 h-full">{children}</div>
     </motion.div>
   );
 }
