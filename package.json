@@ -1,0 +1,43 @@
+{
+  "name": "codescribble",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "14.2.29",
+    "react": "^18",
+    "react-dom": "^18",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "framer-motion": "^11.3.19",
+    "@react-three/fiber": "^8.17.7",
+    "@react-three/drei": "^9.112.0",
+    "three": "^0.167.1",
+    "@monaco-editor/react": "^4.6.0",
+    "zustand": "^4.5.4",
+    "lucide-react": "^0.441.0",
+    "uuid": "^10.0.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.2"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/three": "^0.167.0",
+    "@types/uuid": "^10.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.29",
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8",
+    "autoprefixer": "^10.0.1"
+  }
+}
