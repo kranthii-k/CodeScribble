@@ -9,14 +9,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "neon-green": "#39ff14",
-        "neon-cyan": "#00f5ff",
-        "neon-pink": "#ff00a0",
-        "neon-yellow": "#fff01f",
-        "neon-orange": "#ff6b00",
-        "deep-black": "#020207",
-        "glass-dark": "rgba(5, 5, 20, 0.6)",
-        "glass-border": "rgba(0, 245, 255, 0.2)",
+        // Primary accent — indigo
+        "accent": "#6366f1",
+        "accent-light": "#818cf8",
+        "accent-dim": "#4338ca",
+        // Secondary — violet
+        "secondary": "#7c3aed",
+        "secondary-light": "#a78bfa",
+        // Status colors (subtle)
+        "clr-success": "#10b981",
+        "clr-warn": "#f59e0b",
+        "clr-danger": "#f43f5e",
+        // Legacy names kept so existing Tailwind classes don't break
+        // — remapped to the new clean palette
+        "neon-green": "#10b981",   // was #39ff14 (aggressive neon green → calm emerald)
+        "neon-cyan": "#6366f1",    // was #00f5ff (acid cyan → indigo)
+        "neon-pink": "#a78bfa",    // was #ff00a0 (hot pink → soft violet)
+        "neon-yellow": "#f59e0b",  // was #fff01f (harsh yellow → amber)
+        "neon-orange": "#f97316",  // stays close
+        "deep-black": "#060609",
+        "glass-dark": "rgba(12, 12, 22, 0.7)",
+        "glass-border": "rgba(99, 102, 241, 0.18)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
@@ -29,8 +42,6 @@ const config: Config = {
         "float": "float 4s ease-in-out infinite",
         "float-slow": "float 6s ease-in-out infinite",
         "pulse-glow": "pulseGlow 2s ease-in-out infinite",
-        "neon-flicker": "neonFlicker 3s ease-in-out infinite",
-        "scan-line": "scanLine 8s linear infinite",
       },
       keyframes: {
         float: {
@@ -38,23 +49,15 @@ const config: Config = {
           "50%": { transform: "translateY(-8px)" },
         },
         pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 5px currentColor, 0 0 20px currentColor" },
-          "50%": { boxShadow: "0 0 20px currentColor, 0 0 60px currentColor, 0 0 100px currentColor" },
-        },
-        neonFlicker: {
-          "0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%": { opacity: "1" },
-          "20%, 24%, 55%": { opacity: "0.6" },
-        },
-        scanLine: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(100vh)" },
+          "0%, 100%": { boxShadow: "0 0 4px currentColor, 0 0 12px currentColor" },
+          "50%": { boxShadow: "0 0 12px currentColor, 0 0 32px currentColor" },
         },
       },
       boxShadow: {
-        "neon-green": "0 0 10px #39ff14, 0 0 30px #39ff1440, 0 0 60px #39ff1420",
-        "neon-cyan": "0 0 10px #00f5ff, 0 0 30px #00f5ff40, 0 0 60px #00f5ff20",
-        "neon-pink": "0 0 10px #ff00a0, 0 0 30px #ff00a040, 0 0 60px #ff00a020",
-        "glass": "0 8px 32px 0 rgba(0, 245, 255, 0.1), inset 0 0 0 1px rgba(0, 245, 255, 0.15)",
+        "neon-green": "0 0 8px #10b981, 0 0 20px #10b98130",
+        "neon-cyan": "0 0 8px #6366f1, 0 0 20px #6366f130",
+        "neon-pink": "0 0 8px #a78bfa, 0 0 20px #a78bfa30",
+        "glass": "0 8px 32px 0 rgba(99,102,241,0.08), inset 0 0 0 1px rgba(99,102,241,0.12)",
       },
     },
   },

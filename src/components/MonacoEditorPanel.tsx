@@ -5,41 +5,40 @@ import { motion } from "framer-motion";
 import Editor, { loader } from "@monaco-editor/react";
 import type { SabotageType } from "@/types/game";
 
-// Configure Monaco to use CDN (avoids Next.js webpack conflicts)
 loader.config({ paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/min/vs" } });
 
-const NEON_THEME_NAME = "codescribble-neon";
+const THEME_NAME = "codescribble-dark";
 
-function defineNeonTheme(monaco: any) {
-  monaco.editor.defineTheme(NEON_THEME_NAME, {
+function defineTheme(monaco: any) {
+  monaco.editor.defineTheme(THEME_NAME, {
     base: "vs-dark",
     inherit: true,
     rules: [
-      { token: "", foreground: "39ff14", background: "020207" },
-      { token: "comment", foreground: "2a5a2a", fontStyle: "italic" },
-      { token: "keyword", foreground: "00f5ff", fontStyle: "bold" },
-      { token: "string", foreground: "ff00a0" },
-      { token: "number", foreground: "fff01f" },
-      { token: "type", foreground: "00f5ff" },
-      { token: "variable", foreground: "a0ffb0" },
-      { token: "function", foreground: "00f5ff" },
-      { token: "operator", foreground: "ff6b00" },
+      { token: "", foreground: "e2e8f0", background: "0a0a14" },
+      { token: "comment", foreground: "475569", fontStyle: "italic" },
+      { token: "keyword", foreground: "818cf8", fontStyle: "bold" },
+      { token: "string", foreground: "a78bfa" },
+      { token: "number", foreground: "f59e0b" },
+      { token: "type", foreground: "818cf8" },
+      { token: "variable", foreground: "c7d2fe" },
+      { token: "function", foreground: "6366f1" },
+      { token: "operator", foreground: "94a3b8" },
     ],
     colors: {
-      "editor.background": "#020207",
-      "editor.foreground": "#39ff14",
-      "editorCursor.foreground": "#00f5ff",
-      "editor.lineHighlightBackground": "#0a1a0a",
-      "editorLineNumber.foreground": "#1a4a1a",
-      "editorLineNumber.activeForeground": "#39ff14",
-      "editor.selectionBackground": "#00f5ff33",
-      "editor.selectionHighlightBackground": "#00f5ff15",
-      "editorBracketMatch.background": "#00f5ff20",
-      "editorBracketMatch.border": "#00f5ff",
-      "scrollbar.shadow": "#020207",
-      "scrollbarSlider.background": "#39ff1420",
-      "scrollbarSlider.hoverBackground": "#39ff1440",
-      "scrollbarSlider.activeBackground": "#39ff1460",
+      "editor.background": "#0a0a14",
+      "editor.foreground": "#e2e8f0",
+      "editorCursor.foreground": "#818cf8",
+      "editor.lineHighlightBackground": "#13131f",
+      "editorLineNumber.foreground": "#334155",
+      "editorLineNumber.activeForeground": "#818cf8",
+      "editor.selectionBackground": "#6366f130",
+      "editor.selectionHighlightBackground": "#6366f115",
+      "editorBracketMatch.background": "#6366f120",
+      "editorBracketMatch.border": "#6366f1",
+      "scrollbar.shadow": "#0a0a14",
+      "scrollbarSlider.background": "#6366f120",
+      "scrollbarSlider.hoverBackground": "#6366f140",
+      "scrollbarSlider.activeBackground": "#6366f160",
     },
   });
 }
@@ -54,8 +53,6 @@ interface MonacoEditorPanelProps {
 export function MonacoEditorPanel({ code, isReadOnly, sabotageEffect, onChange }: MonacoEditorPanelProps) {
   const editorRef = useRef<any>(null);
 
-  // Push live code updates into the editor for guessers only.
-  // Coder's editor is fully uncontrolled — Monaco owns its own buffer.
   useEffect(() => {
     if (!editorRef.current || !isReadOnly) return;
     const model = editorRef.current.getModel();
@@ -77,32 +74,26 @@ export function MonacoEditorPanel({ code, isReadOnly, sabotageEffect, onChange }
 
   return (
     <motion.div
-      className="w-full h-full flex flex-col rounded-lg overflow-hidden border border-[rgba(57,255,20,0.2)]"
-      style={{ boxShadow: "0 0 20px rgba(57,255,20,0.08), inset 0 0 0 1px rgba(57,255,20,0.1)" }}
+      className="w-full h-full flex flex-col rounded-lg overflow-hidden border border-[rgba(99,102,241,0.2)]"
+      style={{ boxShadow: "0 0 20px rgba(99,102,241,0.06), inset 0 0 0 1px rgba(99,102,241,0.08)" }}
       animate={effect !== "normal" ? containerVariants[effect] : { x: 0, scaleX: 1 }}
       transition={effect !== "normal" ? containerVariants[effect].transition : undefined}
     >
-      {/* Top bar — fixed height */}
-      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-[rgba(57,255,20,0.05)] border-b border-[rgba(57,255,20,0.15)]">
+      {/* Top bar */}
+      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-[rgba(99,102,241,0.04)] border-b border-[rgba(99,102,241,0.12)]">
         <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
         <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
         <div className="w-2.5 h-2.5 rounded-full bg-[#28c940]" />
-        <span className="ml-2 font-mono text-xs text-[rgba(57,255,20,0.5)] tracking-widest">
+        <span className="ml-2 font-mono text-xs text-[rgba(129,140,248,0.6)] tracking-widest">
           {isReadOnly ? "// LIVE FEED — READ ONLY" : "// CODING TERMINAL — YOU ARE THE CODER"}
         </span>
         {!isReadOnly && (
-          <span className="ml-auto font-mono text-[10px] text-neon-green animate-pulse" style={{ textShadow: "0 0 8px #39ff14" }}>
+          <span className="ml-auto font-mono text-[10px] text-accent-light animate-pulse">
             ● LIVE
           </span>
         )}
       </div>
 
-      {/*
-        Editor wrapper — flex-1 so it fills ALL remaining height after the top bar.
-        Monaco needs an explicit pixel-height parent; flex-1 + min-h-0 provides that.
-        KEY: remount Monaco fresh when isReadOnly flips (role change) so readOnly
-        option is guaranteed correct from the very first render.
-      */}
       <div className="flex-1 min-h-0">
         <Editor
           key={isReadOnly ? "ro" : "rw"}
@@ -127,12 +118,12 @@ export function MonacoEditorPanel({ code, isReadOnly, sabotageEffect, onChange }
             hideCursorInOverviewRuler: true,
             scrollbar: { verticalScrollbarSize: 4, horizontalScrollbarSize: 4 },
           }}
-          beforeMount={defineNeonTheme}
+          beforeMount={defineTheme}
           onMount={(editor: any, monaco: any) => {
             editorRef.current = editor;
-            monaco.editor.setTheme(NEON_THEME_NAME);
+            monaco.editor.setTheme(THEME_NAME);
           }}
-          theme={NEON_THEME_NAME}
+          theme={THEME_NAME}
         />
       </div>
     </motion.div>

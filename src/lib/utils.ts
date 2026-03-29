@@ -16,7 +16,7 @@ export function formatTime(seconds: number): string {
 }
 
 export function getTimerColor(timeLeft: number): string {
-  if (timeLeft > 30) return "#39ff14"; // neon-green
-  if (timeLeft > 15) return "#fff01f"; // neon-yellow
-  return "#ff00a0"; // neon-pink
+  if (timeLeft > 30) return "#10b981"; // emerald
+  if (timeLeft > 15) return "#f59e0b"; // amber
+  return "#f43f5e"; // rose
 }

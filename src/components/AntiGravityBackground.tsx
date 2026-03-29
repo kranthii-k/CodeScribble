@@ -31,11 +31,11 @@ function ParticleField({ count = 3500 }: { count?: number }) {
     <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
       <PointMaterial
         transparent
-        color="#00f5ff"
-        size={0.035}
+        color="#6366f1"
+        size={0.03}
         sizeAttenuation
         depthWrite={false}
-        opacity={0.7}
+        opacity={0.5}
       />
     </Points>
   );
@@ -56,7 +56,7 @@ function WireframeOrb() {
   return (
     <mesh ref={ref} position={[3.5, -1, -4]}>
       <torusKnotGeometry args={[1.2, 0.35, 120, 16]} />
-      <meshBasicMaterial color="#00f5ff" wireframe opacity={0.12} transparent />
+      <meshBasicMaterial color="#7c3aed" wireframe opacity={0.09} transparent />
     </mesh>
   );
 }
@@ -66,9 +66,8 @@ function WireframeOrb() {
 function GridPlane() {
   return (
     <gridHelper
-      args={[40, 40, "#00f5ff", "#0a1628"]}
+      args={[40, 40, "#4338ca", "#0d0d18"]}
       position={[0, -6, 0]}
-      rotation={[0, 0, 0]}
     />
   );
 }
@@ -82,7 +81,7 @@ export function AntiGravityBackground() {
         position: "fixed",
         inset: 0,
         zIndex: 0,
-        background: "radial-gradient(ellipse at 50% 0%, #020d1f 0%, #020207 70%)",
+        background: "radial-gradient(ellipse at 50% 0%, #0f0c29 0%, #060609 70%)",
         pointerEvents: "none",
       }}
     >

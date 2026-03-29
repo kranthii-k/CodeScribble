@@ -13,10 +13,10 @@ interface GlassCardProps {
 }
 
 const glowMap = {
-  cyan: "shadow-neon-cyan border-[rgba(0,245,255,0.3)]",
-  green: "shadow-neon-green border-[rgba(57,255,20,0.3)]",
-  pink: "shadow-neon-pink border-[rgba(255,0,160,0.3)]",
-  none: "border-[rgba(255,255,255,0.08)]",
+  cyan: "shadow-neon-cyan border-[rgba(99,102,241,0.25)]",
+  green: "shadow-neon-green border-[rgba(16,185,129,0.25)]",
+  pink: "shadow-neon-pink border-[rgba(167,139,250,0.25)]",
+  none: "border-[rgba(255,255,255,0.06)]",
 };
 
 export function GlassCard({ children, className, glow = "cyan", float = true, delay = 0 }: GlassCardProps) {

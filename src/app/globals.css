@@ -6,78 +6,75 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
 :root {
-  --neon-green: #39ff14;
-  --neon-cyan: #00f5ff;
-  --neon-pink: #ff00a0;
-  --neon-yellow: #fff01f;
-  --neon-orange: #ff6b00;
-  --deep-black: #020207;
+  --accent:          #6366f1;
+  --accent-light:    #818cf8;
+  --accent-dim:      #4338ca;
+  --secondary:       #7c3aed;
+  --secondary-light: #a78bfa;
+  --success:         #10b981;
+  --warn:            #f59e0b;
+  --danger:          #f43f5e;
+  --deep-black:      #060609;
+  --surface:         rgba(12, 12, 22, 0.7);
+  --border:          rgba(99, 102, 241, 0.15);
+  --border-hover:    rgba(99, 102, 241, 0.35);
+  --text-primary:    #f1f5f9;
+  --text-secondary:  #94a3b8;
+  --text-muted:      #475569;
 }
 
 /* ─── Base Reset ────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  background: var(--deep-black);
-  color-scheme: dark;
-}
-
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--deep-black); color-scheme: dark; }
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   font-family: 'Inter', system-ui, sans-serif;
   background: transparent;
-  color: #e2e8f0;
+  color: var(--text-primary);
   overflow-x: hidden;
   min-height: 100vh;
 }
 
 /* ─── Custom Scrollbar ──────────────────────────────────────────────── */
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.03); border-radius: 2px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 245, 255, 0.25); border-radius: 2px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 245, 255, 0.5); }
-
-* { scrollbar-width: thin; scrollbar-color: rgba(0, 245, 255, 0.25) transparent; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 2px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 2px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.45); }
+* { scrollbar-width: thin; scrollbar-color: rgba(99,102,241,0.25) transparent; }
 
 /* ─── Text Selection ────────────────────────────────────────────────── */
-::selection {
-  background: rgba(0, 245, 255, 0.25);
-  color: var(--neon-cyan);
-}
+::selection { background: rgba(99,102,241,0.25); color: #818cf8; }
 
-/* ─── Neon Glow Text Utilities ───────────────────────────────────────── */
-.glow-green  { text-shadow: 0 0 8px var(--neon-green),  0 0 24px var(--neon-green),  0 0 48px rgba(57,255,20,0.4); }
-.glow-cyan   { text-shadow: 0 0 8px var(--neon-cyan),   0 0 24px var(--neon-cyan),   0 0 48px rgba(0,245,255,0.4); }
-.glow-pink   { text-shadow: 0 0 8px var(--neon-pink),   0 0 24px var(--neon-pink),   0 0 48px rgba(255,0,160,0.4); }
-.glow-yellow { text-shadow: 0 0 8px var(--neon-yellow), 0 0 24px var(--neon-yellow), 0 0 48px rgba(255,240,31,0.4); }
+/* ─── Glow text helpers ─────────────────────────────────────────────── */
+.glow-accent   { text-shadow: 0 0 8px var(--accent),   0 0 20px rgba(99,102,241,0.4); }
+.glow-green    { text-shadow: 0 0 8px var(--success),  0 0 20px rgba(16,185,129,0.3); }
+.glow-violet   { text-shadow: 0 0 8px var(--secondary-light), 0 0 20px rgba(167,139,250,0.3); }
+/* Legacy aliases */
+.glow-cyan     { text-shadow: 0 0 8px var(--accent), 0 0 20px rgba(99,102,241,0.4); }
+.glow-pink     { text-shadow: 0 0 8px var(--secondary-light), 0 0 20px rgba(167,139,250,0.3); }
+.glow-yellow   { text-shadow: 0 0 8px var(--warn), 0 0 20px rgba(245,158,11,0.3); }
 
 /* ─── Glass Panel ────────────────────────────────────────────────────── */
 .glass {
-  background: rgba(5, 5, 20, 0.65);
+  background: var(--surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 245, 255, 0.15);
+  border: 1px solid var(--border);
   border-radius: 16px;
 }
 
-/* ─── Pulsing Button ─────────────────────────────────────────────────── */
-.btn-neon-pulse {
-  position: relative;
-  overflow: hidden;
-}
+/* ─── Pulsing gradient border ────────────────────────────────────────── */
+.btn-neon-pulse { position: relative; overflow: hidden; }
 .btn-neon-pulse::before {
   content: '';
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green), var(--neon-pink), var(--neon-cyan));
+  background: linear-gradient(90deg, var(--accent), var(--secondary-light), var(--accent));
   background-size: 200% 200%;
   animation: gradientShift 3s ease infinite;
   z-index: -1;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 @keyframes gradientShift {
   0%   { background-position: 0% 50%; }
@@ -85,19 +82,17 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ─── CRT Flicker on Load ────────────────────────────────────────────── */
+/* ─── CRT on ─────────────────────────────────────────────────────────── */
 @keyframes crtOn {
   0%   { opacity: 0; transform: scaleY(0.01) scaleX(1.05); }
   5%   { opacity: 1; transform: scaleY(1)    scaleX(1); }
-  100% { opacity: 1; transform: scaleY(1)    scaleX(1); }
+  100% { opacity: 1; }
 }
-.crt-on {
-  animation: crtOn 0.4s ease-out forwards;
-}
+.crt-on { animation: crtOn 0.4s ease-out forwards; }
 
-/* ─── Animated Gradient Hero Text ────────────────────────────────────── */
+/* ─── Gradient title text ────────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-green) 50%, var(--neon-cyan) 100%);
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--secondary-light) 50%, var(--accent-light) 100%);
   background-size: 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -105,7 +100,5 @@ body {
   animation: gradientShift 4s ease infinite;
 }
 
-/* ─── Monaco Editor host fix ─────────────────────────────────────────── */
-.monaco-editor-container {
-  height: 100% !important;
-}
+/* ─── Monaco host fix ────────────────────────────────────────────────── */
+.monaco-editor-container { height: 100% !important; }
