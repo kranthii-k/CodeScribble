@@ -8,7 +8,7 @@ interface NeonTimerProps {
   totalTime?: number;
 }
 
-export function NeonTimer({ timeLeft, totalTime = 60 }: NeonTimerProps) {
+export function NeonTimer({ timeLeft, totalTime = 300 }: NeonTimerProps) {
   const pct = (timeLeft / totalTime) * 100;
   const color = getTimerColor(timeLeft);
 

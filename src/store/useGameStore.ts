@@ -47,7 +47,7 @@ const initialState = {
   room: null,
   currentCode: "",
   currentPrompt: null,
-  timeLeft: 60,
+  timeLeft: 300,
   messages: [],
   sabotageEffect: null,
   hackNotification: null,

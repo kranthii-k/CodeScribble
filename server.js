@@ -112,7 +112,7 @@ function createRoom(id) {
     currentPrompt: null,
     coderId: null,
     codeContent: "",
-    timeLeft: 60,
+    timeLeft: 300,
     roundNumber: 0,
   };
 }
@@ -150,7 +150,7 @@ function startTimer(io, roomId) {
         room.currentPrompt = null;
         room.coderId = null;
         room.codeContent = "";
-        room.timeLeft = 90;
+        room.timeLeft = 300;
         room.players.forEach((p) => { p.hasGuessed = false; p.role = "guesser"; });
         io.to(roomId).emit("room_update", { room });
       }, 5000);
@@ -206,12 +206,13 @@ app.prepare().then(() => {
       coder.role = "coder";
       players.filter((p) => p.id !== coder.id).forEach((p) => { p.role = "guesser"; p.hasGuessed = false; });
       room.status = "playing";
-      room.currentPrompt = prompt; // full object { name, aliases }
+      room.currentPrompt = prompt.name; // store as string — the full object must NOT be put in room
       room.coderId = coder.id;
       room.codeContent = "";
-      room.timeLeft = 90; // slightly more time for coding problems
+      room.timeLeft = 300; // 5 minutes
       room.roundNumber += 1;
-      // Send the prompt (name only) to the coder
+      // Send the prompt (name only) to the coder; guessers get null
+      // We build a sanitized room snapshot (currentPrompt already a string now)
       io.to(coder.id).emit("game_started", { prompt: prompt.name, room });
       // Guessers don't see the prompt name
       socket.to(roomId).emit("game_started", { prompt: null, room });
@@ -235,7 +236,11 @@ app.prepare().then(() => {
       const player = room.players.find((p) => p.id === socket.id);
       if (!player || player.role === "coder" || player.hasGuessed) return;
 
-      const correct = room.currentPrompt && isCorrectGuess(guess, room.currentPrompt);
+      // Build a temporary prompt object for matching (currentPrompt is now stored as a string)
+      const promptObj = room.currentPrompt
+        ? PROMPTS.find((p) => p.name === room.currentPrompt) || { name: room.currentPrompt, aliases: [] }
+        : null;
+      const correct = promptObj && isCorrectGuess(guess, promptObj);
 
       if (correct) {
         const points = Math.max(100, room.timeLeft * 10);
@@ -243,7 +248,7 @@ app.prepare().then(() => {
         player.hasGuessed = true;
         io.to(roomId).emit("correct_guess", { username, points, timeLeft: room.timeLeft });
         io.to(roomId).emit("room_update", { room });
-        console.log(`[Guess] ${username} guessed correctly ("${guess}" ≈ "${room.currentPrompt.name}") +${points} pts`);
+        console.log(`[Guess] ${username} guessed correctly ("${guess}" ≈ "${room.currentPrompt}") +${points} pts`);
 
         // Check if all guessers have guessed
         const guessers = room.players.filter((p) => p.role === "guesser");
@@ -305,7 +310,7 @@ app.prepare().then(() => {
           if (room.coderId === socket.id && room.status === "playing") {
             room.status = "gameover";
             if (timers.has(room.id)) { clearInterval(timers.get(room.id)); timers.delete(room.id); }
-            io.to(room.id).emit("game_over", { prompt: room.currentPrompt, players: room.players });
+            io.to(room.id).emit("game_over", { prompt: room.currentPrompt ?? null, players: room.players });
           }
           io.to(room.id).emit("room_update", { room });
         }
