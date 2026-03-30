@@ -112,7 +112,7 @@ function createRoom(id) {
     currentPrompt: null,
     coderId: null,
     codeContent: "",
-    timeLeft: 300,
+    timeLeft: 180,
     roundNumber: 0,
   };
 }
@@ -150,7 +150,7 @@ function startTimer(io, roomId) {
         room.currentPrompt = null;
         room.coderId = null;
         room.codeContent = "";
-        room.timeLeft = 300;
+        room.timeLeft = 180;
         room.players.forEach((p) => { p.hasGuessed = false; p.role = "guesser"; });
         io.to(roomId).emit("room_update", { room });
       }, 5000);
@@ -209,7 +209,7 @@ app.prepare().then(() => {
       room.currentPrompt = prompt.name; // store as string — the full object must NOT be put in room
       room.coderId = coder.id;
       room.codeContent = "";
-      room.timeLeft = 300; // 5 minutes
+      room.timeLeft = 180; // 3 minutes
       room.roundNumber += 1;
       // Send the prompt (name only) to the coder; guessers get null
       // We build a sanitized room snapshot (currentPrompt already a string now)
